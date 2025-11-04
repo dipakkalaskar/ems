@@ -39,4 +39,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public EmployeeDto updateEmployee(Long id, EmployeeDto updatedEmployeeDto) {
+        Employee employee = employeeRepository.findById(id).orElseThrow();
+        employee.setFirstName(updatedEmployeeDto.getFirstName());
+        employee.setLastName(updatedEmployeeDto.getLastName());
+        employee.setEmail(updatedEmployeeDto.getEmail());
+        Employee updatedEmployee =  employeeRepository.save(employee);
+        return EmployeeMapper.mapToEmployeeDto(updatedEmployee);
+    }
+
 }
